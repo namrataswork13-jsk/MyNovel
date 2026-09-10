@@ -5,14 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>My Book</title>
 
-<!-- Google Fonts for a classic book feel -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
 
-<!-- jQuery (required by turn.js) -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<!-- turn.js for the page flip effect -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/4.1.0/turn.min.js"></script>
 
 <style>
@@ -42,7 +39,6 @@
     text-shadow: 0 2px 8px rgba(0,0,0,0.6);
   }
 
-  /* ---------- The Book ---------- */
   #book {
     width: 900px;
     height: 600px;
@@ -65,7 +61,6 @@
     box-shadow: inset 0 0 40px rgba(139, 109, 60, 0.15);
   }
 
-  /* Cover styling */
   .cover {
     background: url('cover.jpg') center/cover no-repeat,
                 linear-gradient(135deg, #5a3a1f, #2a1a0a);
@@ -114,7 +109,6 @@
     font-size: 1.2rem;
   }
 
-  /* Index page */
   .index-page h2 {
     font-family: 'Playfair Display', serif;
     font-size: 2.4rem;
@@ -164,7 +158,13 @@
     transform: translateY(-4px);
   }
 
-  /* Chapter pages */
+  /* Shared chapter page styles */
+  .chapter-page p {
+    text-align: justify;
+    text-indent: 2em;
+    margin-bottom: 1em;
+  }
+
   .chapter-page h2 {
     font-family: 'Playfair Display', serif;
     font-size: 2rem;
@@ -189,13 +189,8 @@
     font-size: 1.3rem;
   }
 
-  .chapter-page p {
-    text-align: justify;
-    text-indent: 2em;
-    margin-bottom: 1em;
-  }
-
-  .chapter-page p:first-of-type::first-letter {
+  /* Drop cap ONLY on the first page of each chapter */
+  .chapter-start p:first-of-type::first-letter {
     font-family: 'Playfair Display', serif;
     font-size: 3.2rem;
     float: left;
@@ -205,7 +200,6 @@
     font-weight: 700;
   }
 
-  /* Page numbers */
   .page-number {
     position: absolute;
     bottom: 20px;
@@ -217,7 +211,6 @@
     font-style: italic;
   }
 
-  /* Controls */
   .controls {
     margin-top: 30px;
     display: flex;
@@ -265,7 +258,6 @@
     font-style: italic;
   }
 
-  /* Responsive */
   @media (max-width: 950px) {
     #book { width: 95vw; height: 65vw; }
     .page { padding: 30px; font-size: 1rem; }
@@ -299,18 +291,18 @@
     <h2>INDEX</h2>
     <ol>
       <li data-goto="5"><span>The Girl Who Believed</span><span class="dots"></span></li>
-      <li data-goto="9"><span>Jam2504</span><span class="dots"></span></li>
-      <li data-goto="11"><span>First Love</span><span class="dots"></span></li>
-      <li data-goto="13"><span>Let Me Live My Life</span><span class="dots"></span></li>
-      <li data-goto="15"><span>The Friendship</span><span class="dots"></span></li>
-      <li data-goto="17"><span>The Party!</span><span class="dots"></span></li>
-      <li data-goto="19"><span>The New People</span><span class="dots"></span></li>
-      <li data-goto="21"><span>Complicated</span><span class="dots"></span></li>
-      <li data-goto="23"><span>Jealousy</span><span class="dots"></span></li>
-      <li data-goto="25"><span>What Are We?</span><span class="dots"></span></li>
-      <li data-goto="27"><span>Not James</span><span class="dots"></span></li>
-      <li data-goto="29"><span>The Curse of the Hopeless</span><span class="dots"></span></li>
-      <li data-goto="31"><span>Author's Note</span><span class="dots"></span></li>
+      <li data-goto="10"><span>Jam2504</span><span class="dots"></span></li>
+      <li data-goto="12"><span>First Love</span><span class="dots"></span></li>
+      <li data-goto="14"><span>Let Me Live My Life</span><span class="dots"></span></li>
+      <li data-goto="16"><span>The Friendship</span><span class="dots"></span></li>
+      <li data-goto="18"><span>The Party!</span><span class="dots"></span></li>
+      <li data-goto="20"><span>The New People</span><span class="dots"></span></li>
+      <li data-goto="22"><span>Complicated</span><span class="dots"></span></li>
+      <li data-goto="24"><span>Jealousy</span><span class="dots"></span></li>
+      <li data-goto="26"><span>What Are We?</span><span class="dots"></span></li>
+      <li data-goto="28"><span>Not James</span><span class="dots"></span></li>
+      <li data-goto="30"><span>The Curse of the Hopeless</span><span class="dots"></span></li>
+      <li data-goto="32"><span>Author's Note</span><span class="dots"></span></li>
     </ol>
     <div class="page-number">— iii —</div>
   </div>
@@ -320,8 +312,8 @@
     <div class="page-number">— iv —</div>
   </div>
 
-  <!-- CHAPTER 1: The Girl Who Believed (4 pages) -->
-  <div class="page chapter-page" data-page="5">
+  <!-- CHAPTER 1: The Girl Who Believed (5 pages, first page has chapter-start) -->
+  <div class="page chapter-page chapter-start" data-page="5">
     <h2>Chapter 1</h2>
     <div class="chapter-subtitle">The Girl Who Believed</div>
     <div class="ornament">❦ ❦ ❦</div>
@@ -483,7 +475,7 @@
   </div>
 
   <!-- Chapter 2 -->
-  <div class="page chapter-page" data-page="10">
+  <div class="page chapter-page chapter-start" data-page="10">
     <h2>Chapter 2</h2>
     <div class="chapter-subtitle">Jam2504</div>
     <div class="ornament">❦ ❦ ❦</div>
@@ -496,7 +488,7 @@
   </div>
 
   <!-- Chapter 3 -->
-  <div class="page chapter-page" data-page="12">
+  <div class="page chapter-page chapter-start" data-page="12">
     <h2>Chapter 3</h2>
     <div class="chapter-subtitle">First Love</div>
     <div class="ornament">❦ ❦ ❦</div>
@@ -509,7 +501,7 @@
   </div>
 
   <!-- Chapter 4 -->
-  <div class="page chapter-page" data-page="14">
+  <div class="page chapter-page chapter-start" data-page="14">
     <h2>Chapter 4</h2>
     <div class="chapter-subtitle">Let Me Live My Life</div>
     <div class="ornament">❦ ❦ ❦</div>
@@ -522,7 +514,7 @@
   </div>
 
   <!-- Chapter 5 -->
-  <div class="page chapter-page" data-page="16">
+  <div class="page chapter-page chapter-start" data-page="16">
     <h2>Chapter 5</h2>
     <div class="chapter-subtitle">The Friendship</div>
     <div class="ornament">❦ ❦ ❦</div>
@@ -535,7 +527,7 @@
   </div>
 
   <!-- Chapter 6 -->
-  <div class="page chapter-page" data-page="18">
+  <div class="page chapter-page chapter-start" data-page="18">
     <h2>Chapter 6</h2>
     <div class="chapter-subtitle">The Party!</div>
     <div class="ornament">❦ ❦ ❦</div>
@@ -548,7 +540,7 @@
   </div>
 
   <!-- Chapter 7 -->
-  <div class="page chapter-page" data-page="20">
+  <div class="page chapter-page chapter-start" data-page="20">
     <h2>Chapter 7</h2>
     <div class="chapter-subtitle">The New People</div>
     <div class="ornament">❦ ❦ ❦</div>
@@ -561,7 +553,7 @@
   </div>
 
   <!-- Chapter 8 -->
-  <div class="page chapter-page" data-page="22">
+  <div class="page chapter-page chapter-start" data-page="22">
     <h2>Chapter 8</h2>
     <div class="chapter-subtitle">Complicated</div>
     <div class="ornament">❦ ❦ ❦</div>
@@ -574,7 +566,7 @@
   </div>
 
   <!-- Chapter 9 -->
-  <div class="page chapter-page" data-page="24">
+  <div class="page chapter-page chapter-start" data-page="24">
     <h2>Chapter 9</h2>
     <div class="chapter-subtitle">Jealousy</div>
     <div class="ornament">❦ ❦ ❦</div>
@@ -587,7 +579,7 @@
   </div>
 
   <!-- Chapter 10 -->
-  <div class="page chapter-page" data-page="26">
+  <div class="page chapter-page chapter-start" data-page="26">
     <h2>Chapter 10</h2>
     <div class="chapter-subtitle">What Are We?</div>
     <div class="ornament">❦ ❦ ❦</div>
@@ -600,7 +592,7 @@
   </div>
 
   <!-- Chapter 11 -->
-  <div class="page chapter-page" data-page="28">
+  <div class="page chapter-page chapter-start" data-page="28">
     <h2>Chapter 11</h2>
     <div class="chapter-subtitle">Not James</div>
     <div class="ornament">❦ ❦ ❦</div>
@@ -613,7 +605,7 @@
   </div>
 
   <!-- Chapter 12 -->
-  <div class="page chapter-page" data-page="30">
+  <div class="page chapter-page chapter-start" data-page="30">
     <h2>Chapter 12</h2>
     <div class="chapter-subtitle">The Curse of the Hopeless</div>
     <div class="ornament">❦ ❦ ❦</div>
@@ -626,7 +618,7 @@
   </div>
 
   <!-- Chapter 13: Author's Note -->
-  <div class="page chapter-page" data-page="32">
+  <div class="page chapter-page chapter-start" data-page="32">
     <h2>Author's Note</h2>
     <div class="ornament">❦ ❦ ❦</div>
     <p>Write your author's note here...</p>
@@ -671,7 +663,6 @@
       }
     });
 
-    // Responsive sizing
     function resizeBook() {
       const w = Math.min(window.innerWidth * 0.95, 900);
       const h = w * (600 / 900);
@@ -680,17 +671,14 @@
     resizeBook();
     $(window).on('resize', resizeBook);
 
-    // Navigation buttons
     $("#prevBtn").on("click", () => $book.turn("previous"));
     $("#nextBtn").on("click", () => $book.turn("next"));
 
-    // Keyboard navigation
     $(document).on("keydown", function (e) {
       if (e.key === "ArrowLeft") $book.turn("previous");
       if (e.key === "ArrowRight") $book.turn("next");
     });
 
-    // Index click-to-jump
     $(".index-page ol li").on("click", function () {
       const target = $(this).data("goto");
       if (target) $book.turn("page", target);
