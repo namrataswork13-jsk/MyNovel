@@ -7,81 +7,93 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Playfair+Display:wght@400;600;700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/4.1.0/turn.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
 
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+  * { 
+    box-sizing: border-box; 
+    margin: 0; 
+    padding: 0; 
+  }
 
   body {
     min-height: 100vh;
-    background:
-      radial-gradient(ellipse at top, #3a2a1a 0%, #1a120a 70%),
-      #1a120a;
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    color: #2b1d10;
+    background: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 50%, #e8eaf6 100%);
+    font-family: 'Lora', Georgia, serif;
+    color: #4a4458;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 30px 10px;
+    padding: 40px 20px;
     overflow-x: hidden;
   }
 
   h1.book-title {
     font-family: 'Playfair Display', serif;
-    color: #e8d9b8;
-    font-size: 2.2rem;
-    margin-bottom: 20px;
-    letter-spacing: 2px;
-    text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+    color: #6b5b7b;
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    letter-spacing: 3px;
+    font-weight: 600;
+    text-shadow: 0 2px 10px rgba(107, 91, 123, 0.15);
   }
 
-  #book {
-    width: 900px;
-    height: 600px;
-    position: relative;
+  /* Book Container */
+  #book-container {
+    perspective: 2000px;
     margin: 0 auto;
   }
 
-  .page {
-    background: #f4ecd8;
-    background-image:
-      radial-gradient(rgba(139, 109, 60, 0.08) 1px, transparent 1px),
-      radial-gradient(rgba(139, 109, 60, 0.05) 1px, transparent 1px);
-    background-size: 20px 20px, 13px 13px;
-    background-position: 0 0, 7px 7px;
-    color: #2b1d10;
-    padding: 50px 60px;
-    font-size: 1.15rem;
-    line-height: 1.7;
-    overflow: hidden;
-    box-shadow: inset 0 0 40px rgba(139, 109, 60, 0.15);
+  #book {
+    position: relative;
+    box-shadow: 0 20px 60px rgba(107, 91, 123, 0.2);
   }
 
+  /* Page Styling */
+  .page {
+    background: #fefcf9;
+    color: #4a4458;
+    padding: 60px 70px;
+    font-size: 1.1rem;
+    line-height: 1.9;
+    text-align: left;
+  }
+
+  /* Cover */
   .cover {
-    background: url('cover.jpg') center/cover no-repeat,
-                linear-gradient(135deg, #5a3a1f, #2a1a0a);
-    background-color: #3a2410;
+    background: url('cover.jpg') center/cover no-repeat;
+    background-color: #e8b4bc;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 0;
-    box-shadow: inset 0 0 80px rgba(0,0,0,0.6);
+    position: relative;
+  }
+
+  .cover::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(232, 180, 188, 0.3), rgba(201, 184, 217, 0.3));
+    z-index: 1;
   }
 
   .cover::after {
     content: '';
     position: absolute;
-    inset: 15px;
-    border: 2px solid rgba(232, 217, 184, 0.4);
+    inset: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.6);
     pointer-events: none;
+    z-index: 2;
   }
 
+  /* Inside Cover */
   .inside-cover {
-    background: linear-gradient(135deg, #e8d9b8 0%, #d4c09a 100%);
+    background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -92,32 +104,51 @@
   .inside-cover h2 {
     font-family: 'Playfair Display', serif;
     font-size: 2.8rem;
-    color: #3a2410;
+    color: #6b5b7b;
     margin-bottom: 20px;
-    letter-spacing: 3px;
+    letter-spacing: 4px;
+    font-weight: 600;
   }
 
   .inside-cover .ornament {
     font-size: 2rem;
-    color: #8b6d3c;
+    color: #c9b8d9;
     margin: 15px 0;
   }
 
   .inside-cover p {
     font-style: italic;
-    color: #5a4020;
+    color: #7d6b8a;
     font-size: 1.2rem;
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  /* Index Page */
+  .index-page {
+    background: #fefcf9;
   }
 
   .index-page h2 {
     font-family: 'Playfair Display', serif;
-    font-size: 2.4rem;
+    font-size: 2.2rem;
     text-align: center;
-    color: #3a2410;
-    margin-bottom: 30px;
-    letter-spacing: 4px;
-    border-bottom: 1px solid #8b6d3c;
-    padding-bottom: 15px;
+    color: #6b5b7b;
+    margin-bottom: 35px;
+    letter-spacing: 5px;
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 20px;
+  }
+
+  .index-page h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #c9b8d9, transparent);
   }
 
   .index-page ol {
@@ -127,115 +158,127 @@
 
   .index-page ol li {
     counter-increment: chapter;
-    padding: 10px 5px;
-    border-bottom: 1px dotted #b8a070;
+    padding: 12px 10px;
+    border-bottom: 1px solid #f3e5f5;
     display: flex;
     justify-content: space-between;
     align-items: baseline;
     cursor: pointer;
-    transition: all 0.25s ease;
-    font-size: 1.15rem;
+    transition: all 0.3s ease;
+    font-size: 1.1rem;
+    font-family: 'Cormorant Garamond', serif;
   }
 
   .index-page ol li:hover {
-    color: #8b4513;
-    padding-left: 12px;
-    background: rgba(139, 109, 60, 0.08);
+    color: #8e6b9f;
+    padding-left: 15px;
+    background: linear-gradient(90deg, rgba(201, 184, 217, 0.1), transparent);
   }
 
   .index-page ol li::before {
     content: counter(chapter, upper-roman) ".";
     font-weight: 600;
-    color: #8b6d3c;
+    color: #c9b8d9;
     margin-right: 15px;
-    min-width: 35px;
+    min-width: 40px;
   }
 
   .index-page ol li .dots {
     flex: 1;
-    border-bottom: 1px dotted #b8a070;
-    margin: 0 10px;
-    transform: translateY(-4px);
+    border-bottom: 1px dotted #d4c4d9;
+    margin: 0 12px;
+    transform: translateY(-5px);
   }
 
-  /* Shared chapter page styles */
-  .chapter-page p {
-    text-align: justify;
-    text-indent: 2em;
-    margin-bottom: 1em;
+  /* Chapter Pages */
+  .chapter-page {
+    background: #fefcf9;
   }
 
   .chapter-page h2 {
     font-family: 'Playfair Display', serif;
     font-size: 2rem;
-    text-align: center;
-    color: #3a2410;
-    margin-bottom: 10px;
+    text-align: left;
+    color: #6b5b7b;
+    margin-bottom: 8px;
     letter-spacing: 2px;
+    font-weight: 600;
   }
 
   .chapter-page .chapter-subtitle {
-    text-align: center;
+    text-align: left;
     font-style: italic;
-    color: #8b6d3c;
-    margin-bottom: 25px;
-    font-size: 1.1rem;
+    color: #a68bb5;
+    margin-bottom: 30px;
+    font-size: 1.15rem;
+    font-family: 'Cormorant Garamond', serif;
   }
 
   .chapter-page .ornament {
-    text-align: center;
-    color: #8b6d3c;
-    margin: 10px 0 25px;
-    font-size: 1.3rem;
+    text-align: left;
+    color: #c9b8d9;
+    margin: 0 0 30px;
+    font-size: 1.2rem;
+    letter-spacing: 8px;
   }
 
-  /* Drop cap ONLY on the first page of each chapter */
+  .chapter-page p {
+    text-align: left;
+    margin-bottom: 1.2em;
+    text-indent: 0;
+  }
+
+  /* Drop cap only on chapter start */
   .chapter-start p:first-of-type::first-letter {
     font-family: 'Playfair Display', serif;
-    font-size: 3.2rem;
+    font-size: 3.5rem;
     float: left;
-    line-height: 0.9;
-    margin: 5px 8px 0 0;
-    color: #8b4513;
+    line-height: 0.85;
+    margin: 5px 12px 0 0;
+    color: #8e6b9f;
     font-weight: 700;
   }
 
+  /* Page Numbers */
   .page-number {
     position: absolute;
-    bottom: 20px;
+    bottom: 25px;
     left: 0;
     right: 0;
     text-align: center;
     font-size: 0.9rem;
-    color: #8b6d3c;
+    color: #a68bb5;
     font-style: italic;
+    font-family: 'Cormorant Garamond', serif;
   }
 
+  /* Controls */
   .controls {
-    margin-top: 30px;
+    margin-top: 40px;
     display: flex;
-    gap: 20px;
+    gap: 25px;
     align-items: center;
   }
 
   .nav-btn {
-    background: linear-gradient(135deg, #8b6d3c, #5a4020);
-    color: #f4ecd8;
-    border: 1px solid #c9a96a;
-    padding: 10px 25px;
+    background: linear-gradient(135deg, #c9b8d9, #a68bb5);
+    color: #fefcf9;
+    border: none;
+    padding: 12px 30px;
     font-family: 'Cormorant Garamond', serif;
     font-size: 1rem;
     letter-spacing: 2px;
     cursor: pointer;
-    border-radius: 3px;
-    transition: all 0.25s ease;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.4);
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(166, 139, 181, 0.3);
+    font-weight: 500;
   }
 
   .nav-btn:hover:not(:disabled) {
-    background: linear-gradient(135deg, #a6834a, #6d4e28);
+    background: linear-gradient(135deg, #d4c4d9, #b89bc5);
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    box-shadow: 0 6px 20px rgba(166, 139, 181, 0.4);
   }
 
   .nav-btn:disabled {
@@ -244,27 +287,31 @@
   }
 
   .page-indicator {
-    color: #e8d9b8;
+    color: #6b5b7b;
     font-style: italic;
     font-size: 1rem;
-    min-width: 100px;
+    min-width: 120px;
     text-align: center;
+    font-family: 'Cormorant Garamond', serif;
   }
 
   .hint {
-    color: #a89070;
-    font-size: 0.85rem;
-    margin-top: 15px;
+    color: #8e7a9f;
+    font-size: 0.9rem;
+    margin-top: 20px;
     font-style: italic;
+    font-family: 'Cormorant Garamond', serif;
   }
 
+  /* Responsive */
   @media (max-width: 950px) {
-    #book { width: 95vw; height: 65vw; }
-    .page { padding: 30px; font-size: 1rem; }
-    .inside-cover h2 { font-size: 1.8rem; }
-    .chapter-page h2 { font-size: 1.4rem; }
-    .index-page h2 { font-size: 1.6rem; }
-    .index-page ol li { font-size: 0.95rem; }
+    #book { width: 90vw !important; height: auto !important; }
+    .page { padding: 40px; font-size: 1rem; }
+    .inside-cover h2 { font-size: 2rem; }
+    .chapter-page h2 { font-size: 1.6rem; }
+    .index-page h2 { font-size: 1.8rem; }
+    .index-page ol li { font-size: 1rem; }
+    h1.book-title { font-size: 1.8rem; }
   }
 </style>
 </head>
@@ -272,366 +319,368 @@
 
 <h1 class="book-title">✦ A Story Worth Telling ✦</h1>
 
-<div id="book">
+<div id="book-container">
+  <div id="book">
 
-  <!-- PAGE 1: COVER -->
-  <div class="page cover" data-page="1"></div>
+    <!-- PAGE 1: COVER -->
+    <div class="page cover"></div>
 
-  <!-- PAGE 2: INSIDE COVER / TITLE -->
-  <div class="page inside-cover" data-page="2">
-    <div class="ornament">❦</div>
-    <h2>THE STORY</h2>
-    <div class="ornament">— ✦ —</div>
-    <p>A journey of love, friendship, and finding yourself.</p>
-    <div class="ornament" style="margin-top:40px;">❦</div>
-  </div>
+    <!-- PAGE 2: INSIDE COVER -->
+    <div class="page inside-cover">
+      <div class="ornament">❦</div>
+      <h2>THE STORY</h2>
+      <div class="ornament">— ✦ —</div>
+      <p>A journey of love, friendship, and finding yourself.</p>
+      <div class="ornament" style="margin-top:40px;">❦</div>
+    </div>
 
-  <!-- PAGE 3: INDEX -->
-  <div class="page index-page" data-page="3">
-    <h2>INDEX</h2>
-    <ol>
-      <li data-goto="5"><span>The Girl Who Believed</span><span class="dots"></span></li>
-      <li data-goto="10"><span>Jam2504</span><span class="dots"></span></li>
-      <li data-goto="12"><span>First Love</span><span class="dots"></span></li>
-      <li data-goto="14"><span>Let Me Live My Life</span><span class="dots"></span></li>
-      <li data-goto="16"><span>The Friendship</span><span class="dots"></span></li>
-      <li data-goto="18"><span>The Party!</span><span class="dots"></span></li>
-      <li data-goto="20"><span>The New People</span><span class="dots"></span></li>
-      <li data-goto="22"><span>Complicated</span><span class="dots"></span></li>
-      <li data-goto="24"><span>Jealousy</span><span class="dots"></span></li>
-      <li data-goto="26"><span>What Are We?</span><span class="dots"></span></li>
-      <li data-goto="28"><span>Not James</span><span class="dots"></span></li>
-      <li data-goto="30"><span>The Curse of the Hopeless</span><span class="dots"></span></li>
-      <li data-goto="32"><span>Author's Note</span><span class="dots"></span></li>
-    </ol>
-    <div class="page-number">— iii —</div>
-  </div>
+    <!-- PAGE 3: INDEX -->
+    <div class="page index-page">
+      <h2>INDEX</h2>
+      <ol>
+        <li data-goto="4"><span>The Girl Who Believed</span><span class="dots"></span></li>
+        <li data-goto="9"><span>Jam2504</span><span class="dots"></span></li>
+        <li data-goto="11"><span>First Love</span><span class="dots"></span></li>
+        <li data-goto="13"><span>Let Me Live My Life</span><span class="dots"></span></li>
+        <li data-goto="15"><span>The Friendship</span><span class="dots"></span></li>
+        <li data-goto="17"><span>The Party!</span><span class="dots"></span></li>
+        <li data-goto="19"><span>The New People</span><span class="dots"></span></li>
+        <li data-goto="21"><span>Complicated</span><span class="dots"></span></li>
+        <li data-goto="23"><span>Jealousy</span><span class="dots"></span></li>
+        <li data-goto="25"><span>What Are We?</span><span class="dots"></span></li>
+        <li data-goto="27"><span>Not James</span><span class="dots"></span></li>
+        <li data-goto="29"><span>The Curse of the Hopeless</span><span class="dots"></span></li>
+        <li data-goto="31"><span>Author's Note</span><span class="dots"></span></li>
+      </ol>
+      <div class="page-number">— iii —</div>
+    </div>
 
-  <!-- PAGE 4: blank -->
-  <div class="page" data-page="4">
-    <div class="page-number">— iv —</div>
-  </div>
+    <!-- PAGE 4: blank -->
+    <div class="page">
+      <div class="page-number">— iv —</div>
+    </div>
 
-  <!-- CHAPTER 1: The Girl Who Believed (5 pages, first page has chapter-start) -->
-  <div class="page chapter-page chapter-start" data-page="5">
-    <h2>Chapter 1</h2>
-    <div class="chapter-subtitle">The Girl Who Believed</div>
-    <div class="ornament">❦ ❦ ❦</div>
-    <p>"Life is messed up rn!" Lia shouted from across the room.</p>
-    <p>"You better get it right or I'll kill you!" Jean shouted back from another corner.</p>
-    <p>And that was how most mornings started in the Flynn household.</p>
-    <p>Lia was eighteen, a tech major pursuing her diploma, and, according to Jean, a complete disaster when it came to getting ready on time.</p>
-    <p>Jean was two years older, an architecture major, and somehow managed to look put together even when she had ten minutes to get ready.</p>
-    <p>They went to the same university, which was either the best thing that had ever happened to them or the worst. Neither of them had decided yet.</p>
-    <p>Sometimes they were best friends.</p>
-    <p>Sometimes they were enemies.</p>
-    <p>And sometimes they genuinely looked like they were one argument away from killing each other.</p>
-    <p>"Where is my black top?" Lia yelled.</p>
-    <p>"You have seventeen black tops!"</p>
-    <p>"That's not the point."</p>
-    <p>"What is the point?"</p>
-    <p>"The one I want is missing."</p>
-    <div class="page-number">— 1 —</div>
-  </div>
+    <!-- CHAPTER 1 -->
+    <div class="page chapter-page chapter-start">
+      <h2>Chapter 1</h2>
+      <div class="chapter-subtitle">The Girl Who Believed</div>
+      <div class="ornament">❦ ❦ ❦</div>
+      <p>"Life is messed up rn!" Lia shouted from across the room.</p>
+      <p>"You better get it right or I'll kill you!" Jean shouted back from another corner.</p>
+      <p>And that was how most mornings started in the Flynn household.</p>
+      <p>Lia was eighteen, a tech major pursuing her diploma, and, according to Jean, a complete disaster when it came to getting ready on time.</p>
+      <p>Jean was two years older, an architecture major, and somehow managed to look put together even when she had ten minutes to get ready.</p>
+      <p>They went to the same university, which was either the best thing that had ever happened to them or the worst. Neither of them had decided yet.</p>
+      <p>Sometimes they were best friends.</p>
+      <p>Sometimes they were enemies.</p>
+      <p>And sometimes they genuinely looked like they were one argument away from killing each other.</p>
+      <p>"Where is my black top?" Lia yelled.</p>
+      <p>"You have seventeen black tops!"</p>
+      <p>"That's not the point."</p>
+      <p>"What is the point?"</p>
+      <p>"The one I want is missing."</p>
+      <div class="page-number">— 1 —</div>
+    </div>
 
-  <div class="page chapter-page" data-page="6">
-    <p>Jean sighed.</p>
-    <p>"Of course it is."</p>
-    <p>Lia finally found the top buried under a pile of clothes on her bed.</p>
-    <p>"There!"</p>
-    <p>Jean looked at her.</p>
-    <p>"You're unbelievable."</p>
-    <p>"Thank you."</p>
-    <p>"That wasn't a compliment."</p>
-    <p>"I chose to take it as one."</p>
-    <p>Jean rolled her eyes and grabbed her bag.</p>
-    <p>Lia followed her downstairs, still fixing her hair as they walked.</p>
-    <p>They hopped into their car, Jean taking the driver's seat while Lia connected her phone to the speakers.</p>
-    <p>A few seconds later, Taylor Swift started playing.</p>
-    <p>Jean immediately looked at her.</p>
-    <p>"No."</p>
-    <p>Lia smiled.</p>
-    <p>"Yes."</p>
-    <p>"Lia."</p>
-    <p>"I knew you were trouble when you walked in…"</p>
-    <p>"I'm turning this off."</p>
-    <p>"...so shame on me now."</p>
-    <p>Jean reached for the phone.</p>
-    <p>Lia moved it away.</p>
-    <p>"Don't you dare!"</p>
-    <p>"You know I hate this song."</p>
-    <p>"Exactly."</p>
-    <p>"You are so annoying."</p>
-    <p>"And yet you love me."</p>
-    <p>Jean stared at her for a second before starting the car.</p>
-    <p>"Unfortunately."</p>
-    <p>Lia smiled and turned the volume up.</p>
-    <div class="page-number">— 2 —</div>
-  </div>
+    <div class="page chapter-page">
+      <p>Jean sighed.</p>
+      <p>"Of course it is."</p>
+      <p>Lia finally found the top buried under a pile of clothes on her bed.</p>
+      <p>"There!"</p>
+      <p>Jean looked at her.</p>
+      <p>"You're unbelievable."</p>
+      <p>"Thank you."</p>
+      <p>"That wasn't a compliment."</p>
+      <p>"I chose to take it as one."</p>
+      <p>Jean rolled her eyes and grabbed her bag.</p>
+      <p>Lia followed her downstairs, still fixing her hair as they walked.</p>
+      <p>They hopped into their car, Jean taking the driver's seat while Lia connected her phone to the speakers.</p>
+      <p>A few seconds later, Taylor Swift started playing.</p>
+      <p>Jean immediately looked at her.</p>
+      <p>"No."</p>
+      <p>Lia smiled.</p>
+      <p>"Yes."</p>
+      <p>"Lia."</p>
+      <p>"I knew you were trouble when you walked in…"</p>
+      <p>"I'm turning this off."</p>
+      <p>"...so shame on me now."</p>
+      <p>Jean reached for the phone.</p>
+      <p>Lia moved it away.</p>
+      <p>"Don't you dare!"</p>
+      <p>"You know I hate this song."</p>
+      <p>"Exactly."</p>
+      <p>"You are so annoying."</p>
+      <p>"And yet you love me."</p>
+      <p>Jean stared at her for a second before starting the car.</p>
+      <p>"Unfortunately."</p>
+      <p>Lia smiled and turned the volume up.</p>
+      <div class="page-number">— 2 —</div>
+    </div>
 
-  <div class="page chapter-page" data-page="7">
-    <p>She had always been like that.</p>
-    <p>Full of life.</p>
-    <p>Or at least, she liked to think she was.</p>
-    <p>Lia was the kind of person who could romanticize almost anything. A rainy afternoon. A stranger smiling at her in the hallway. Someone holding the door open for another person. A song playing at the exact right moment. She read romance books like they were instruction manuals for life. She listened to Taylor Swift like every song had been written specifically about her. She believed in coincidences, signs, timing, and the idea that maybe, somewhere out there, someone was waiting for her. Which was funny, because Lia Flynn had been single for as long as she could remember.</p>
-    <p>"Single since birth," she liked to say.</p>
-    <p>She wasn't desperate for a relationship.</p>
-    <p>At least, that's what she told everyone.</p>
-    <p>She was actually quite happy.</p>
-    <p>She was one of the smartest students in her class, although she rarely acted like it. She'd procrastinate, complain about assignments, spend hours reading something completely unrelated to college, and then somehow sit down the night before an exam and get the grades.</p>
-    <p>Life was pretty fine. Nothing extraordinary. Nothing terrible. She had Jean. She had her friends. She had college. She had books. She had music. She had a life she was slowly figuring out. And for an eighteen-year-old, that was enough.</p>
-    <p>Until one day, the world stopped.</p>
-    <p>"It's a lockdown."</p>
-    <p>The news reporter said it like those two words were enough to explain everything.</p>
-    <p>Lia stared at the television. Jean stood beside her, arms crossed.</p>
-    <p>"What does that even mean?"</p>
-    <p>"I don't know."</p>
-    <p>"You're the smart one."</p>
-    <p>"I am not the smart one."</p>
-    <p>"You literally study tech."</p>
-    <p>"That doesn't mean I know what's happening with the world."</p>
-    <div class="page-number">— 3 —</div>
-  </div>
+    <div class="page chapter-page">
+      <p>She had always been like that.</p>
+      <p>Full of life.</p>
+      <p>Or at least, she liked to think she was.</p>
+      <p>Lia was the kind of person who could romanticize almost anything. A rainy afternoon. A stranger smiling at her in the hallway. Someone holding the door open for another person. A song playing at the exact right moment. She read romance books like they were instruction manuals for life. She listened to Taylor Swift like every song had been written specifically about her. She believed in coincidences, signs, timing, and the idea that maybe, somewhere out there, someone was waiting for her. Which was funny, because Lia Flynn had been single for as long as she could remember.</p>
+      <p>"Single since birth," she liked to say.</p>
+      <p>She wasn't desperate for a relationship.</p>
+      <p>At least, that's what she told everyone.</p>
+      <p>She was actually quite happy.</p>
+      <p>She was one of the smartest students in her class, although she rarely acted like it. She'd procrastinate, complain about assignments, spend hours reading something completely unrelated to college, and then somehow sit down the night before an exam and get the grades.</p>
+      <p>Life was pretty fine. Nothing extraordinary. Nothing terrible. She had Jean. She had her friends. She had college. She had books. She had music. She had a life she was slowly figuring out. And for an eighteen-year-old, that was enough.</p>
+      <p>Until one day, the world stopped.</p>
+      <p>"It's a lockdown."</p>
+      <p>The news reporter said it like those two words were enough to explain everything.</p>
+      <p>Lia stared at the television. Jean stood beside her, arms crossed.</p>
+      <p>"What does that even mean?"</p>
+      <p>"I don't know."</p>
+      <p>"You're the smart one."</p>
+      <p>"I am not the smart one."</p>
+      <p>"You literally study tech."</p>
+      <p>"That doesn't mean I know what's happening with the world."</p>
+      <div class="page-number">— 3 —</div>
+    </div>
 
-  <div class="page chapter-page" data-page="8">
-    <p>They both looked back at the television. People were talking about a virus. Cases. Hospitals. Restrictions. Something called COVID-19 that none of them had really heard about before. And suddenly, everyone was scared. Lia grabbed the keys.</p>
-    <p>"We need groceries."</p>
-    <p>Jean looked at her.</p>
-    <p>"Now?"</p>
-    <p>"Yes, now."</p>
-    <p>"Why?"</p>
-    <p>"Because apparently the entire world is ending."</p>
-    <p>"That's dramatic."</p>
-    <p>"Have you seen the news?"</p>
-    <p>"Yes."</p>
-    <p>"Then let's go."</p>
-    <p>They rushed out, the streets were crowded. People were everywhere, trying to buy whatever they could before everything closed. There was panic in the air, people were talking loudly. Stores were getting emptied. And for the first time, Lia saw something she'd never really seen before.</p>
-    <p>Fear.</p>
-    <p>Real fear.</p>
-    <p>The kind that made people unsure of what tomorrow would look like.</p>
-    <p>Lia and Jean lived alone.</p>
-    <p>Their parents had transferable jobs and were usually moving from one place to another, so the sisters had gotten used to managing things themselves.</p>
-    <p>But this felt different.</p>
-    <p>There was no college.</p>
-    <p>No going out.</p>
-    <p>No random plans.</p>
-    <p>No normal days.</p>
-    <p>The streets were slowly becoming empty.</p>
-    <p>And everyone was being told to stay inside.</p>
-    <p>For a few days, they thought.</p>
-    <p>Maybe a couple of weeks.</p>
-    <p>It couldn't possibly last longer than that.</p>
-    <p>Right?</p>
-    <div class="page-number">— 4 —</div>
-  </div>
+    <div class="page chapter-page">
+      <p>They both looked back at the television. People were talking about a virus. Cases. Hospitals. Restrictions. Something called COVID-19 that none of them had really heard about before. And suddenly, everyone was scared. Lia grabbed the keys.</p>
+      <p>"We need groceries."</p>
+      <p>Jean looked at her.</p>
+      <p>"Now?"</p>
+      <p>"Yes, now."</p>
+      <p>"Why?"</p>
+      <p>"Because apparently the entire world is ending."</p>
+      <p>"That's dramatic."</p>
+      <p>"Have you seen the news?"</p>
+      <p>"Yes."</p>
+      <p>"Then let's go."</p>
+      <p>They rushed out, the streets were crowded. People were everywhere, trying to buy whatever they could before everything closed. There was panic in the air, people were talking loudly. Stores were getting emptied. And for the first time, Lia saw something she'd never really seen before.</p>
+      <p>Fear.</p>
+      <p>Real fear.</p>
+      <p>The kind that made people unsure of what tomorrow would look like.</p>
+      <p>Lia and Jean lived alone.</p>
+      <p>Their parents had transferable jobs and were usually moving from one place to another, so the sisters had gotten used to managing things themselves.</p>
+      <p>But this felt different.</p>
+      <p>There was no college.</p>
+      <p>No going out.</p>
+      <p>No random plans.</p>
+      <p>No normal days.</p>
+      <p>The streets were slowly becoming empty.</p>
+      <p>And everyone was being told to stay inside.</p>
+      <p>For a few days, they thought.</p>
+      <p>Maybe a couple of weeks.</p>
+      <p>It couldn't possibly last longer than that.</p>
+      <p>Right?</p>
+      <div class="page-number">— 4 —</div>
+    </div>
 
-  <div class="page chapter-page" data-page="9">
-    <p>It did.</p>
-    <p>Days turned into weeks. Weeks turned into months. And eventually, nobody even remembered what a normal day was supposed to feel like.</p>
-    <p>Jean spent hours texting and calling the guy she was dating.</p>
-    <p>Lia watched. She smiled for her sister. She teased her. She pretended she wasn't jealous of the fact that Jean had someone to call at the end of the day.</p>
-    <p>Because Lia had always romanticized love, but somehow, love had never really found its way to her.</p>
-    <p>At first, lockdown felt almost like a vacation.</p>
-    <p>Then it became boring.</p>
-    <p>Then lonely.</p>
-    <p>And then the loneliness started feeling normal.</p>
-    <p>Lia studied.</p>
-    <p>She watched movies.</p>
-    <p>She read books.</p>
-    <p>She listened to music.</p>
-    <p>She scrolled through Instagram for hours.</p>
-    <p>She'd wake up, look at her phone, complain about having online classes, attend them while barely paying attention, and then somehow end up back on Instagram.</p>
-    <p>One afternoon, she was scrolling through one of the fandom pages she followed.</p>
-    <p>Someone had posted something about one of the idols not being talented enough to be in the group.</p>
-    <p>The comments were a mess. People were arguing. People were insulting each other. People were acting like they personally owned the group. Lia stared at the screen.</p>
-    <p>"Oh my God."</p>
-    <p>She kept scrolling.</p>
-    <p>Someone said the idol couldn't sing.</p>
-    <p>Someone else said they couldn't dance.</p>
-    <p>Someone else said they shouldn't even be in the group.</p>
-    <p>Lia couldn't stop herself.</p>
-    <p>She typed a reply.</p>
-    <p>And then she saw a comment from someone named jam2504.</p>
-    <p>"You don't get to decide who stays or leaves the group. You can't even dance and sing at once."</p>
-    <p>Lia stared at the comment.</p>
-    <p>Then smiled.</p>
-    <p>"Atta boy."</p>
-    <p>She liked the comment.</p>
-    <p>Then, without thinking much about it, replied:</p>
-    <p>"Exactly!"</p>
-    <p>She put her phone down and went back to her college assignment. For the next hour, she completely forgot about it. Then she picked up her phone again.</p>
-    <p>One notification.</p>
-    <p>Instagram.</p>
-    <p>jam2504 has requested to follow you.</p>
-    <p>Lia stared at the screen.</p>
-    <p>For some reason, her heart skipped.</p>
-    <p>She frowned.</p>
-    <p>"It's just Instagram."</p>
-    <p>She stared at the notification again.</p>
-    <p>Then smiled.</p>
-    <p>"Okay…"</p>
-    <p>Maybe lockdown wasn't going to be that boring after all.</p>
-    <div class="page-number">— 5 —</div>
-  </div>
+    <div class="page chapter-page">
+      <p>It did.</p>
+      <p>Days turned into weeks. Weeks turned into months. And eventually, nobody even remembered what a normal day was supposed to feel like.</p>
+      <p>Jean spent hours texting and calling the guy she was dating.</p>
+      <p>Lia watched. She smiled for her sister. She teased her. She pretended she wasn't jealous of the fact that Jean had someone to call at the end of the day.</p>
+      <p>Because Lia had always romanticized love, but somehow, love had never really found its way to her.</p>
+      <p>At first, lockdown felt almost like a vacation.</p>
+      <p>Then it became boring.</p>
+      <p>Then lonely.</p>
+      <p>And then the loneliness started feeling normal.</p>
+      <p>Lia studied.</p>
+      <p>She watched movies.</p>
+      <p>She read books.</p>
+      <p>She listened to music.</p>
+      <p>She scrolled through Instagram for hours.</p>
+      <p>She'd wake up, look at her phone, complain about having online classes, attend them while barely paying attention, and then somehow end up back on Instagram.</p>
+      <p>One afternoon, she was scrolling through one of the fandom pages she followed.</p>
+      <p>Someone had posted something about one of the idols not being talented enough to be in the group.</p>
+      <p>The comments were a mess. People were arguing. People were insulting each other. People were acting like they personally owned the group. Lia stared at the screen.</p>
+      <p>"Oh my God."</p>
+      <p>She kept scrolling.</p>
+      <p>Someone said the idol couldn't sing.</p>
+      <p>Someone else said they couldn't dance.</p>
+      <p>Someone else said they shouldn't even be in the group.</p>
+      <p>Lia couldn't stop herself.</p>
+      <p>She typed a reply.</p>
+      <p>And then she saw a comment from someone named jam2504.</p>
+      <p>"You don't get to decide who stays or leaves the group. You can't even dance and sing at once."</p>
+      <p>Lia stared at the comment.</p>
+      <p>Then smiled.</p>
+      <p>"Atta boy."</p>
+      <p>She liked the comment.</p>
+      <p>Then, without thinking much about it, replied:</p>
+      <p>"Exactly!"</p>
+      <p>She put her phone down and went back to her college assignment. For the next hour, she completely forgot about it. Then she picked up her phone again.</p>
+      <p>One notification.</p>
+      <p>Instagram.</p>
+      <p>jam2504 has requested to follow you.</p>
+      <p>Lia stared at the screen.</p>
+      <p>For some reason, her heart skipped.</p>
+      <p>She frowned.</p>
+      <p>"It's just Instagram."</p>
+      <p>She stared at the notification again.</p>
+      <p>Then smiled.</p>
+      <p>"Okay…"</p>
+      <p>Maybe lockdown wasn't going to be that boring after all.</p>
+      <div class="page-number">— 5 —</div>
+    </div>
 
-  <!-- Chapter 2 -->
-  <div class="page chapter-page chapter-start" data-page="10">
-    <h2>Chapter 2</h2>
-    <div class="chapter-subtitle">Jam2504</div>
-    <div class="ornament">❦ ❦ ❦</div>
-    <p>Chapter content goes here...</p>
-    <div class="page-number">— 6 —</div>
-  </div>
-  <div class="page chapter-page" data-page="11">
-    <p>Continued...</p>
-    <div class="page-number">— 7 —</div>
-  </div>
+    <!-- Chapter 2 -->
+    <div class="page chapter-page chapter-start">
+      <h2>Chapter 2</h2>
+      <div class="chapter-subtitle">Jam2504</div>
+      <div class="ornament">❦ ❦ ❦</div>
+      <p>Chapter content goes here...</p>
+      <div class="page-number">— 6 —</div>
+    </div>
+    <div class="page chapter-page">
+      <p>Continued...</p>
+      <div class="page-number">— 7 —</div>
+    </div>
 
-  <!-- Chapter 3 -->
-  <div class="page chapter-page chapter-start" data-page="12">
-    <h2>Chapter 3</h2>
-    <div class="chapter-subtitle">First Love</div>
-    <div class="ornament">❦ ❦ ❦</div>
-    <p>Chapter content goes here...</p>
-    <div class="page-number">— 8 —</div>
-  </div>
-  <div class="page chapter-page" data-page="13">
-    <p>Continued...</p>
-    <div class="page-number">— 9 —</div>
-  </div>
+    <!-- Chapter 3 -->
+    <div class="page chapter-page chapter-start">
+      <h2>Chapter 3</h2>
+      <div class="chapter-subtitle">First Love</div>
+      <div class="ornament">❦ ❦ ❦</div>
+      <p>Chapter content goes here...</p>
+      <div class="page-number">— 8 —</div>
+    </div>
+    <div class="page chapter-page">
+      <p>Continued...</p>
+      <div class="page-number">— 9 —</div>
+    </div>
 
-  <!-- Chapter 4 -->
-  <div class="page chapter-page chapter-start" data-page="14">
-    <h2>Chapter 4</h2>
-    <div class="chapter-subtitle">Let Me Live My Life</div>
-    <div class="ornament">❦ ❦ ❦</div>
-    <p>Chapter content goes here...</p>
-    <div class="page-number">— 10 —</div>
-  </div>
-  <div class="page chapter-page" data-page="15">
-    <p>Continued...</p>
-    <div class="page-number">— 11 —</div>
-  </div>
+    <!-- Chapter 4 -->
+    <div class="page chapter-page chapter-start">
+      <h2>Chapter 4</h2>
+      <div class="chapter-subtitle">Let Me Live My Life</div>
+      <div class="ornament">❦ ❦ ❦</div>
+      <p>Chapter content goes here...</p>
+      <div class="page-number">— 10 —</div>
+    </div>
+    <div class="page chapter-page">
+      <p>Continued...</p>
+      <div class="page-number">— 11 —</div>
+    </div>
 
-  <!-- Chapter 5 -->
-  <div class="page chapter-page chapter-start" data-page="16">
-    <h2>Chapter 5</h2>
-    <div class="chapter-subtitle">The Friendship</div>
-    <div class="ornament">❦ ❦ ❦</div>
-    <p>Chapter content goes here...</p>
-    <div class="page-number">— 12 —</div>
-  </div>
-  <div class="page chapter-page" data-page="17">
-    <p>Continued...</p>
-    <div class="page-number">— 13 —</div>
-  </div>
+    <!-- Chapter 5 -->
+    <div class="page chapter-page chapter-start">
+      <h2>Chapter 5</h2>
+      <div class="chapter-subtitle">The Friendship</div>
+      <div class="ornament">❦ ❦ ❦</div>
+      <p>Chapter content goes here...</p>
+      <div class="page-number">— 12 —</div>
+    </div>
+    <div class="page chapter-page">
+      <p>Continued...</p>
+      <div class="page-number">— 13 —</div>
+    </div>
 
-  <!-- Chapter 6 -->
-  <div class="page chapter-page chapter-start" data-page="18">
-    <h2>Chapter 6</h2>
-    <div class="chapter-subtitle">The Party!</div>
-    <div class="ornament">❦ ❦ ❦</div>
-    <p>Chapter content goes here...</p>
-    <div class="page-number">— 14 —</div>
-  </div>
-  <div class="page chapter-page" data-page="19">
-    <p>Continued...</p>
-    <div class="page-number">— 15 —</div>
-  </div>
+    <!-- Chapter 6 -->
+    <div class="page chapter-page chapter-start">
+      <h2>Chapter 6</h2>
+      <div class="chapter-subtitle">The Party!</div>
+      <div class="ornament">❦ ❦ ❦</div>
+      <p>Chapter content goes here...</p>
+      <div class="page-number">— 14 —</div>
+    </div>
+    <div class="page chapter-page">
+      <p>Continued...</p>
+      <div class="page-number">— 15 —</div>
+    </div>
 
-  <!-- Chapter 7 -->
-  <div class="page chapter-page chapter-start" data-page="20">
-    <h2>Chapter 7</h2>
-    <div class="chapter-subtitle">The New People</div>
-    <div class="ornament">❦ ❦ ❦</div>
-    <p>Chapter content goes here...</p>
-    <div class="page-number">— 16 —</div>
-  </div>
-  <div class="page chapter-page" data-page="21">
-    <p>Continued...</p>
-    <div class="page-number">— 17 —</div>
-  </div>
+    <!-- Chapter 7 -->
+    <div class="page chapter-page chapter-start">
+      <h2>Chapter 7</h2>
+      <div class="chapter-subtitle">The New People</div>
+      <div class="ornament">❦ ❦ ❦</div>
+      <p>Chapter content goes here...</p>
+      <div class="page-number">— 16 —</div>
+    </div>
+    <div class="page chapter-page">
+      <p>Continued...</p>
+      <div class="page-number">— 17 —</div>
+    </div>
 
-  <!-- Chapter 8 -->
-  <div class="page chapter-page chapter-start" data-page="22">
-    <h2>Chapter 8</h2>
-    <div class="chapter-subtitle">Complicated</div>
-    <div class="ornament">❦ ❦ ❦</div>
-    <p>Chapter content goes here...</p>
-    <div class="page-number">— 18 —</div>
-  </div>
-  <div class="page chapter-page" data-page="23">
-    <p>Continued...</p>
-    <div class="page-number">— 19 —</div>
-  </div>
+    <!-- Chapter 8 -->
+    <div class="page chapter-page chapter-start">
+      <h2>Chapter 8</h2>
+      <div class="chapter-subtitle">Complicated</div>
+      <div class="ornament">❦ ❦ ❦</div>
+      <p>Chapter content goes here...</p>
+      <div class="page-number">— 18 —</div>
+    </div>
+    <div class="page chapter-page">
+      <p>Continued...</p>
+      <div class="page-number">— 19 —</div>
+    </div>
 
-  <!-- Chapter 9 -->
-  <div class="page chapter-page chapter-start" data-page="24">
-    <h2>Chapter 9</h2>
-    <div class="chapter-subtitle">Jealousy</div>
-    <div class="ornament">❦ ❦ ❦</div>
-    <p>Chapter content goes here...</p>
-    <div class="page-number">— 20 —</div>
-  </div>
-  <div class="page chapter-page" data-page="25">
-    <p>Continued...</p>
-    <div class="page-number">— 21 —</div>
-  </div>
+    <!-- Chapter 9 -->
+    <div class="page chapter-page chapter-start">
+      <h2>Chapter 9</h2>
+      <div class="chapter-subtitle">Jealousy</div>
+      <div class="ornament">❦ ❦ ❦</div>
+      <p>Chapter content goes here...</p>
+      <div class="page-number">— 20 —</div>
+    </div>
+    <div class="page chapter-page">
+      <p>Continued...</p>
+      <div class="page-number">— 21 —</div>
+    </div>
 
-  <!-- Chapter 10 -->
-  <div class="page chapter-page chapter-start" data-page="26">
-    <h2>Chapter 10</h2>
-    <div class="chapter-subtitle">What Are We?</div>
-    <div class="ornament">❦ ❦ ❦</div>
-    <p>Chapter content goes here...</p>
-    <div class="page-number">— 22 —</div>
-  </div>
-  <div class="page chapter-page" data-page="27">
-    <p>Continued...</p>
-    <div class="page-number">— 23 —</div>
-  </div>
+    <!-- Chapter 10 -->
+    <div class="page chapter-page chapter-start">
+      <h2>Chapter 10</h2>
+      <div class="chapter-subtitle">What Are We?</div>
+      <div class="ornament">❦ ❦ ❦</div>
+      <p>Chapter content goes here...</p>
+      <div class="page-number">— 22 —</div>
+    </div>
+    <div class="page chapter-page">
+      <p>Continued...</p>
+      <div class="page-number">— 23 —</div>
+    </div>
 
-  <!-- Chapter 11 -->
-  <div class="page chapter-page chapter-start" data-page="28">
-    <h2>Chapter 11</h2>
-    <div class="chapter-subtitle">Not James</div>
-    <div class="ornament">❦ ❦ ❦</div>
-    <p>Chapter content goes here...</p>
-    <div class="page-number">— 24 —</div>
-  </div>
-  <div class="page chapter-page" data-page="29">
-    <p>Continued...</p>
-    <div class="page-number">— 25 —</div>
-  </div>
+    <!-- Chapter 11 -->
+    <div class="page chapter-page chapter-start">
+      <h2>Chapter 11</h2>
+      <div class="chapter-subtitle">Not James</div>
+      <div class="ornament">❦ ❦ ❦</div>
+      <p>Chapter content goes here...</p>
+      <div class="page-number">— 24 —</div>
+    </div>
+    <div class="page chapter-page">
+      <p>Continued...</p>
+      <div class="page-number">— 25 —</div>
+    </div>
 
-  <!-- Chapter 12 -->
-  <div class="page chapter-page chapter-start" data-page="30">
-    <h2>Chapter 12</h2>
-    <div class="chapter-subtitle">The Curse of the Hopeless</div>
-    <div class="ornament">❦ ❦ ❦</div>
-    <p>Chapter content goes here...</p>
-    <div class="page-number">— 26 —</div>
-  </div>
-  <div class="page chapter-page" data-page="31">
-    <p>Continued...</p>
-    <div class="page-number">— 27 —</div>
-  </div>
+    <!-- Chapter 12 -->
+    <div class="page chapter-page chapter-start">
+      <h2>Chapter 12</h2>
+      <div class="chapter-subtitle">The Curse of the Hopeless</div>
+      <div class="ornament">❦ ❦ ❦</div>
+      <p>Chapter content goes here...</p>
+      <div class="page-number">— 26 —</div>
+    </div>
+    <div class="page chapter-page">
+      <p>Continued...</p>
+      <div class="page-number">— 27 —</div>
+    </div>
 
-  <!-- Chapter 13: Author's Note -->
-  <div class="page chapter-page chapter-start" data-page="32">
-    <h2>Author's Note</h2>
-    <div class="ornament">❦ ❦ ❦</div>
-    <p>Write your author's note here...</p>
-    <div class="page-number">— 28 —</div>
-  </div>
-  <div class="page inside-cover" data-page="33">
-    <div class="ornament">❦</div>
-    <h2 style="font-size:2rem;">The End</h2>
-    <div class="ornament">— ✦ —</div>
-    <p>Thank you for reading.</p>
-    <div class="ornament" style="margin-top:40px;">❦</div>
-  </div>
+    <!-- Chapter 13 -->
+    <div class="page chapter-page chapter-start">
+      <h2>Author's Note</h2>
+      <div class="ornament">❦ ❦ ❦</div>
+      <p>Write your author's note here...</p>
+      <div class="page-number">— 28 —</div>
+    </div>
+    <div class="page inside-cover">
+      <div class="ornament">❦</div>
+      <h2 style="font-size:2.2rem;">The End</h2>
+      <div class="ornament">— ✦ —</div>
+      <p>Thank you for reading.</p>
+      <div class="ornament" style="margin-top:40px;">❦</div>
+    </div>
 
+  </div>
 </div>
 
 <div class="controls">
@@ -643,61 +692,53 @@
 <p class="hint">Tip: Use ← → arrow keys, or click the index entries to jump.</p>
 
 <script>
-  $(function () {
-    const $book = $("#book");
+  const pageFlip = new St.PageFlip(document.getElementById('book'), {
+    width: 800,
+    height: 600,
+    size: "stretch",
+    minWidth: 300,
+    maxWidth: 900,
+    minHeight: 400,
+    maxHeight: 700,
+    showCover: true,
+    mobileScrollSupport: true,
+    flippingTime: 800,
+    usePortrait: true,
+    maxShadowOpacity: 0.5,
+    showPageCorners: true,
+    disableFlipByClick: false
+  });
 
-    $book.turn({
-      width: 900,
-      height: 600,
-      autoCenter: true,
-      display: 'double',
-      acceleration: true,
-      gradients: true,
-      elevation: 50,
-      when: {
-        turning: function (event, page, view) {},
-        turned: function (event, page, view) {
-          updateIndicator(page);
-          updateButtons(page);
-        }
-      }
+  const pages = document.querySelectorAll("#book .page");
+  pageFlip.loadFromHTML(pages);
+
+  // Navigation
+  document.getElementById("prevBtn").addEventListener("click", () => pageFlip.flipPrev());
+  document.getElementById("nextBtn").addEventListener("click", () => pageFlip.flipNext());
+
+  // Keyboard
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowLeft") pageFlip.flipPrev();
+    if (e.key === "ArrowRight") pageFlip.flipNext();
+  });
+
+  // Index clicks
+  document.querySelectorAll(".index-page ol li").forEach(li => {
+    li.addEventListener("click", function() {
+      const target = this.dataset.goto;
+      if (target) pageFlip.flip(parseInt(target));
     });
+  });
 
-    function resizeBook() {
-      const w = Math.min(window.innerWidth * 0.95, 900);
-      const h = w * (600 / 900);
-      $book.turn('size', w, h);
-    }
-    resizeBook();
-    $(window).on('resize', resizeBook);
-
-    $("#prevBtn").on("click", () => $book.turn("previous"));
-    $("#nextBtn").on("click", () => $book.turn("next"));
-
-    $(document).on("keydown", function (e) {
-      if (e.key === "ArrowLeft") $book.turn("previous");
-      if (e.key === "ArrowRight") $book.turn("next");
-    });
-
-    $(".index-page ol li").on("click", function () {
-      const target = $(this).data("goto");
-      if (target) $book.turn("page", target);
-    });
-
-    function updateIndicator(page) {
-      const total = $book.turn("pages");
-      const label = page === 1 ? "Cover" : `Page ${page} of ${total}`;
-      $("#pageIndicator").text(label);
-    }
-
-    function updateButtons(page) {
-      const total = $book.turn("pages");
-      $("#prevBtn").prop("disabled", page === 1);
-      $("#nextBtn").prop("disabled", page === total);
-    }
-
-    updateIndicator(1);
-    updateButtons(1);
+  // Update indicator
+  pageFlip.on('flip', (e) => {
+    const currentPage = e.data + 1;
+    const totalPages = pageFlip.getPageCount();
+    const label = currentPage === 1 ? "Cover" : `Page ${currentPage} of ${totalPages}`;
+    document.getElementById("pageIndicator").textContent = label;
+    
+    document.getElementById("prevBtn").disabled = currentPage === 1;
+    document.getElementById("nextBtn").disabled = currentPage === totalPages;
   });
 </script>
 
