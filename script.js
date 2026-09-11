@@ -7,38 +7,38 @@ document.addEventListener("DOMContentLoaded", () => {
   //   (2 * pageWidth) + a small gap
   // We pick a base ratio: 0.68 (portrait), then clamp.
 function computeSize() {
-  const wrapperWidth = wrapper.clientWidth - 40;
-  const wrapperHeight = window.innerHeight - 170;   // tighter — uses more height
+  const wrapperWidth  = wrapper.clientWidth - 20;
+  const wrapperHeight = window.innerHeight - 150;
 
-  const ratio = 1.45;   // slightly less tall = looks more like a real book
+  // Broader ratio = wider pages, less tall (real open-book feel)
+  const ratio = 1.28;
 
-  // Two-page spread: each page takes ~half
-  let pageWidth = Math.floor(wrapperWidth / 2);
+  // Two-page spread: each page = half the available width
+  let pageWidth  = Math.floor(wrapperWidth / 2);
   let pageHeight = Math.floor(pageWidth * ratio);
 
-  // If too tall, scale down by height
+  // If too tall for screen, scale down by height
   if (pageHeight > wrapperHeight) {
     pageHeight = wrapperHeight;
-    pageWidth = Math.floor(pageHeight / ratio);
+    pageWidth  = Math.floor(pageHeight / ratio);
   }
 
-  // Higher clamps — allow bigger pages
-  pageWidth  = Math.max(300, Math.min(pageWidth,  620));
-  pageHeight = Math.max(440, Math.min(pageHeight, 880));
+  // Allow bigger pages on desktop
+  pageWidth  = Math.max(320, Math.min(pageWidth,  720));
+  pageHeight = Math.max(420, Math.min(pageHeight, 920));
 
   return { pageWidth, pageHeight };
 }
-
   const size = computeSize();
 
   const pageFlip = new St.PageFlip(bookElement, {
     width: size.pageWidth,
     height: size.pageHeight,
     size: "fixed",            // ← KEY: use fixed size, we control it
-    minWidth: 300,
-    maxWidth: 620,
-    minHeight: 440,
-    maxHeight: 880,
+    minWidth: 320,
+    maxWidth: 720,
+    minHeight: 420,
+    maxHeight: 920,
     showCover: true,
     mobileScrollSupport: false,
     maxShadowOpacity: 0.55,
