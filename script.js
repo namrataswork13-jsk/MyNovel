@@ -6,29 +6,28 @@ document.addEventListener("DOMContentLoaded", () => {
   // We want 2 pages side by side. So the wrapper must fit:
   //   (2 * pageWidth) + a small gap
   // We pick a base ratio: 0.68 (portrait), then clamp.
-  function computeSize() {
-    const wrapperWidth = wrapper.clientWidth - 60;   // leave padding
-    const wrapperHeight = window.innerHeight - 200;  // leave space for buttons
+function computeSize() {
+  const wrapperWidth = wrapper.clientWidth - 40;
+  const wrapperHeight = window.innerHeight - 170;   // tighter — uses more height
 
-    // Target page ratio (portrait) — height = width * 1.5
-    const ratio = 1.5;
+  const ratio = 1.45;   // slightly less tall = looks more like a real book
 
-    // Two-page layout width
-    let pageWidth = Math.floor(wrapperWidth / 2);
-    let pageHeight = Math.floor(pageWidth * ratio);
+  // Two-page spread: each page takes ~half
+  let pageWidth = Math.floor(wrapperWidth / 2);
+  let pageHeight = Math.floor(pageWidth * ratio);
 
-    // If too tall for the screen, scale down by height
-    if (pageHeight > wrapperHeight) {
-      pageHeight = wrapperHeight;
-      pageWidth = Math.floor(pageHeight / ratio);
-    }
-
-    // Clamp within reasonable bounds
-    pageWidth = Math.max(260, Math.min(pageWidth, 480));
-    pageHeight = Math.max(380, Math.min(pageHeight, 720));
-
-    return { pageWidth, pageHeight };
+  // If too tall, scale down by height
+  if (pageHeight > wrapperHeight) {
+    pageHeight = wrapperHeight;
+    pageWidth = Math.floor(pageHeight / ratio);
   }
+
+  // Higher clamps — allow bigger pages
+  pageWidth  = Math.max(300, Math.min(pageWidth,  620));
+  pageHeight = Math.max(440, Math.min(pageHeight, 880));
+
+  return { pageWidth, pageHeight };
+}
 
   const size = computeSize();
 
@@ -36,10 +35,10 @@ document.addEventListener("DOMContentLoaded", () => {
     width: size.pageWidth,
     height: size.pageHeight,
     size: "fixed",            // ← KEY: use fixed size, we control it
-    minWidth: 260,
-    maxWidth: 480,
-    minHeight: 380,
-    maxHeight: 720,
+    minWidth: 300,
+    maxWidth: 620,
+    minHeight: 440,
+    maxHeight: 880,
     showCover: true,
     mobileScrollSupport: false,
     maxShadowOpacity: 0.55,
