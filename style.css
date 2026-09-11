@@ -18,7 +18,7 @@ body {
   color: #2a1f18;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
-  padding: 30px 15px 110px;
+  padding: 20px 8px 100px;
 }
 
 /* ============ BOOK WRAPPER ============ */
@@ -27,7 +27,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 0;
 }
 
 .book-wrapper::after {
