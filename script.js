@@ -2,19 +2,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const bookElement = document.getElementById("book");
 
   const pageFlip = new St.PageFlip(bookElement, {
-    width: 420,
-    height: 620,
+    width: 380,           // ← smaller page width
+    height: 560,          // ← smaller height
     size: "stretch",
     minWidth: 300,
-    maxWidth: 540,
-    minHeight: 440,
-    maxHeight: 800,
+    maxWidth: 460,        // ← lower max
+    minHeight: 420,
+    maxHeight: 700,
     showCover: true,
-    mobileScrollSupport: false,   // we control scroll on mobile via buttons
+    mobileScrollSupport: false,
     maxShadowOpacity: 0.55,
     drawShadow: true,
     flippingTime: 900,
-    usePortrait: true,
+    usePortrait: true,    // ← keeps mobile single-page, but two-page on desktop
     startZIndex: 0,
     autoSize: true,
     clickEventForward: true,
@@ -25,7 +25,11 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   pageFlip.loadFromHTML(document.querySelectorAll(".page"));
-
+// Force two-page (landscape) mode whenever possible
+pageFlip.update();
+window.addEventListener("resize", () => {
+  pageFlip.update();
+});
   // ====== Add page numbers to all non-cover / non-blank pages ======
   const pages = document.querySelectorAll(".page");
   let num = 1;
