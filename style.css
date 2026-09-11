@@ -1,9 +1,5 @@
-/* ===================== RESET ===================== */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+/* ============ RESET ============ */
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 html, body {
   width: 100%;
@@ -12,8 +8,7 @@ html, body {
 
 body {
   background: #14100c;
-  background-image: 
-    radial-gradient(ellipse at 50% 30%, #2e241a 0%, #14100c 55%, #080604 100%);
+  background-image: radial-gradient(ellipse at 50% 30%, #2e241a 0%, #14100c 55%, #080604 100%);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -24,10 +19,9 @@ body {
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
   padding: 30px 15px 110px;
-  perspective: 2200px;
 }
 
-/* ===================== SCENE (book + resting shadow) ===================== */
+/* ============ BOOK WRAPPER ============ */
 .book-wrapper {
   position: relative;
   display: flex;
@@ -36,7 +30,6 @@ body {
   padding: 20px;
 }
 
-/* Soft ground shadow under the book */
 .book-wrapper::after {
   content: "";
   position: absolute;
@@ -44,7 +37,7 @@ body {
   left: 8%;
   right: 8%;
   height: 40px;
-  background: radial-gradient(ellipse at center, rgba(0,0,0,0.7) 0%, transparent 70%);
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0.75) 0%, transparent 70%);
   filter: blur(14px);
   z-index: 0;
   pointer-events: none;
@@ -54,70 +47,62 @@ body {
   margin: 0 auto;
   position: relative;
   z-index: 2;
-  /* Ambient shadow around the open book */
-  filter: drop-shadow(0 24px 40px rgba(0, 0, 0, 0.8))
-          drop-shadow(0 6px 14px rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(0 24px 40px rgba(0, 0, 0, 0.85))
+          drop-shadow(0 6px 14px rgba(0, 0, 0, 0.55));
 }
 
-/* ===================== PAGES ===================== */
+/* ============ PAGE ============ */
 .page {
   background: #faf3e3;
   overflow: hidden;
   position: relative;
 }
 
-/* Curved outer edge — like a real paper stack */
+/* Curved outer edge */
 .page::before {
   content: "";
   position: absolute;
-  top: 6px;
-  bottom: 6px;
-  width: 14px;
-  z-index: 3;
+  top: 4px;
+  bottom: 4px;
+  width: 16px;
+  z-index: 5;
   pointer-events: none;
-  border-radius: 3px;
 }
 .page:nth-child(odd)::before {
   right: 0;
-  background: linear-gradient(
-    to left,
-    rgba(120, 90, 55, 0.28) 0%,
-    rgba(120, 90, 55, 0.08) 45%,
-    transparent 100%
-  );
-  box-shadow: -2px 0 3px rgba(80, 55, 30, 0.2);
+  background: linear-gradient(to left,
+    rgba(120, 90, 55, 0.35) 0%,
+    rgba(120, 90, 55, 0.10) 55%,
+    transparent 100%);
+  box-shadow: -2px 0 4px rgba(80, 55, 30, 0.25);
 }
 .page:nth-child(even)::before {
   left: 0;
-  background: linear-gradient(
-    to right,
-    rgba(120, 90, 55, 0.28) 0%,
-    rgba(120, 90, 55, 0.08) 45%,
-    transparent 100%
-  );
-  box-shadow: 2px 0 3px rgba(80, 55, 30, 0.2);
+  background: linear-gradient(to right,
+    rgba(120, 90, 55, 0.35) 0%,
+    rgba(120, 90, 55, 0.10) 55%,
+    transparent 100%);
+  box-shadow: 2px 0 4px rgba(80, 55, 30, 0.25);
 }
 
-/* Top and bottom edge shading for paper-thickness illusion */
+/* Paper thickness — top and bottom edges */
 .page::after {
   content: "";
   position: absolute;
-  left: 0;
-  right: 0;
-  height: 100%;
+  left: 0; right: 0; height: 100%;
   pointer-events: none;
   z-index: 2;
-  background: 
-    linear-gradient(to bottom, rgba(90, 60, 30, 0.14) 0%, transparent 3%) top / 100% 100% no-repeat,
-    linear-gradient(to top, rgba(90, 60, 30, 0.14) 0%, transparent 3%) bottom / 100% 100% no-repeat;
+  background:
+    linear-gradient(to bottom, rgba(90, 60, 30, 0.18) 0%, transparent 2.5%) top/100% 100% no-repeat,
+    linear-gradient(to top, rgba(90, 60, 30, 0.18) 0%, transparent 2.5%) bottom/100% 100% no-repeat;
 }
 
 .page-content {
   width: 100%;
   height: 100%;
-  padding: 46px 44px 56px;
+  padding: 46px 44px 60px;
   background: #faf3e3;
-  background-image: 
+  background-image:
     radial-gradient(circle at 15% 8%, rgba(200, 170, 130, 0.10) 0%, transparent 45%),
     radial-gradient(circle at 85% 92%, rgba(200, 170, 130, 0.08) 0%, transparent 45%);
   position: relative;
@@ -126,60 +111,44 @@ body {
   flex-direction: column;
 }
 
-/* Subtle paper grain */
 .page-content::before {
   content: "";
   position: absolute;
   inset: 0;
-  background-image: 
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(160, 130, 90, 0.028) 2px,
-      rgba(160, 130, 90, 0.028) 3px
-    );
+  background-image: repeating-linear-gradient(0deg,
+    transparent, transparent 2px,
+    rgba(160, 130, 90, 0.028) 2px, rgba(160, 130, 90, 0.028) 3px);
   pointer-events: none;
   z-index: 0;
 }
 
-/* === SPINE SHADOW — the heart of the two-page book feel === */
-/* Left-side page (odd child = visually on left when open) */
+/* Spine shadow — inner edges near the center of the open book */
 .page:nth-child(odd) .page-content::after {
   content: "";
   position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  width: 60px;
-  background: linear-gradient(
-    to left,
-    rgba(70, 45, 20, 0.35) 0%,
-    rgba(70, 45, 20, 0.14) 40%,
-    transparent 100%
-  );
+  top: 0; bottom: 0; right: 0;
+  width: 70px;
+  background: linear-gradient(to left,
+    rgba(40, 25, 10, 0.55) 0%,
+    rgba(70, 45, 20, 0.22) 45%,
+    transparent 100%);
   pointer-events: none;
   z-index: 1;
 }
-/* Right-side page */
 .page:nth-child(even) .page-content::after {
   content: "";
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 60px;
-  background: linear-gradient(
-    to right,
-    rgba(70, 45, 20, 0.35) 0%,
-    rgba(70, 45, 20, 0.14) 40%,
-    transparent 100%
-  );
+  top: 0; bottom: 0; left: 0;
+  width: 70px;
+  background: linear-gradient(to right,
+    rgba(40, 25, 10, 0.55) 0%,
+    rgba(70, 45, 20, 0.22) 45%,
+    transparent 100%);
   pointer-events: none;
   z-index: 1;
 }
 
-/* ===================== COVER ===================== */
+/* ============ COVER ============ */
 .page-content.cover {
   padding: 0;
   background: #000;
@@ -191,25 +160,20 @@ body {
   object-fit: cover;
   display: block;
 }
-/* Cover gets a stronger spine edge on the inside */
 .page-content.cover::after {
   content: "";
   position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
+  top: 0; bottom: 0; right: 0;
   width: 30px;
-  background: linear-gradient(to left, rgba(0,0,0,0.65), transparent);
+  background: linear-gradient(to left, rgba(0,0,0,0.7), transparent);
   z-index: 2;
   pointer-events: none;
 }
 
-/* ===================== BLANK ===================== */
-.page-content.blank {
-  background: #f2e8d5;
-}
+/* ============ BLANK ============ */
+.page-content.blank { background: #f2e8d5; }
 
-/* ===================== TITLE PAGE ===================== */
+/* ============ TITLE PAGE ============ */
 .page-content.title-page {
   align-items: center;
   justify-content: center;
@@ -217,8 +181,7 @@ body {
   padding: 60px 40px;
 }
 .title-page h1 {
-  font-family: 'Garamond', 'Georgia', serif;
-  font-size: 2.6em;
+  font-size: 2.4em;
   font-weight: normal;
   letter-spacing: 2px;
   color: #3a2818;
@@ -226,7 +189,7 @@ body {
   margin-bottom: 18px;
 }
 .title-page .subtitle {
-  font-size: 0.95em;
+  font-size: 0.9em;
   letter-spacing: 7px;
   text-transform: uppercase;
   color: #8b6f4e;
@@ -240,13 +203,13 @@ body {
 }
 .title-page .tagline {
   font-style: italic;
-  font-size: 1.05em;
+  font-size: 1.02em;
   color: #6b5238;
   line-height: 1.7;
   max-width: 300px;
 }
 
-/* ===================== CHAPTER ===================== */
+/* ============ CHAPTER ============ */
 .page-content.chapter {
   overflow-y: auto;
   overflow-x: hidden;
@@ -260,8 +223,7 @@ body {
 }
 
 .chapter-title {
-  font-family: 'Garamond', 'Georgia', serif;
-  font-size: 1.5em;
+  font-size: 1.45em;
   font-weight: normal;
   color: #8b5a2b;
   letter-spacing: 4px;
@@ -272,8 +234,7 @@ body {
   z-index: 2;
 }
 .chapter-sub {
-  font-family: 'Garamond', 'Georgia', serif;
-  font-size: 1.45em;
+  font-size: 1.4em;
   font-weight: normal;
   font-style: italic;
   color: #3a2818;
@@ -301,7 +262,7 @@ body {
   z-index: 2;
 }
 
-/* Elegant opening line — no drop cap */
+/* First paragraph after chapter heading — italic, no drop cap */
 .page-content.chapter .chapter-sub + p {
   font-style: italic;
   color: #4a3418;
@@ -316,23 +277,19 @@ body {
   letter-spacing: 2px;
 }
 
-/* ===================== BACK COVER ===================== */
+/* ============ BACK COVER ============ */
 .page-content.back-cover {
   background: #14100c;
-  background-image: 
-    radial-gradient(ellipse at 50% 40%, #2a1f18 0%, #0d0906 100%);
+  background-image: radial-gradient(ellipse at 50% 40%, #2a1f18 0%, #0d0906 100%);
   align-items: center;
   justify-content: center;
   text-align: center;
   padding: 50px 40px;
 }
 .page-content.back-cover::before,
-.page-content.back-cover::after {
-  display: none;
-}
+.page-content.back-cover::after { display: none; }
 .back-title {
-  font-family: 'Garamond', 'Georgia', serif;
-  font-size: 1.55em;
+  font-size: 1.5em;
   color: #d4b88c;
   letter-spacing: 3px;
   margin-bottom: 30px;
@@ -340,35 +297,27 @@ body {
 }
 .back-tagline {
   font-style: italic;
-  font-size: 1.05em;
+  font-size: 1.02em;
   color: #a08668;
   line-height: 1.7;
   max-width: 240px;
   margin: 0 auto;
 }
 
-/* ===================== PAGE NUMBERS ===================== */
-/* PageFlip renders pages inside .book — we add counters via JS + CSS class */
-.page.numbered .page-content::marker { content: none; }
-
+/* ============ PAGE NUMBERS ============ */
 .page-number {
   position: absolute;
-  bottom: 18px;
-  font-family: 'Garamond', 'Georgia', serif;
+  bottom: 20px;
   font-size: 0.78em;
   color: #8b6f4e;
   letter-spacing: 2px;
   z-index: 4;
   pointer-events: none;
 }
-.page:nth-child(odd) .page-number {
-  left: 26px;
-}
-.page:nth-child(even) .page-number {
-  right: 26px;
-}
+.page:nth-child(odd) .page-number { left: 28px; }
+.page:nth-child(even) .page-number { right: 28px; }
 
-/* ===================== NAVIGATION BUTTONS ===================== */
+/* ============ NAV BUTTONS ============ */
 .book-nav {
   position: fixed;
   bottom: 26px;
@@ -383,112 +332,61 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 12px 26px;
+  padding: 12px 28px;
   background: linear-gradient(180deg, #f5ead4 0%, #e6d3ae 100%);
-  color: #4a3venda;
   color: #4a3418;
   border: 1px solid #b89368;
   border-radius: 40px;
   font-family: 'Garamond', 'Georgia', serif;
-  font-size: 0.95em;
-  letter-spacing: 2px;
+  font-size: 0.92em;
+  letter-spacing: 2.5px;
   text-transform: uppercase;
   cursor: pointer;
-  box-shadow: 
-    0 6px 16px rgba(0, 0, 0, 0.5),
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, 0.55),
     inset 0 1px 0 rgba(255, 255, 255, 0.5),
     inset 0 -2px 4px rgba(120, 90, 50, 0.18);
   transition: all 0.25s ease;
   user-select: none;
 }
-
 .nav-btn:hover {
   background: linear-gradient(180deg, #fdf5e0 0%, #eedcbc 100%);
   transform: translateY(-2px);
-  box-shadow: 
-    0 10px 22px rgba(0, 0, 0, 0.6),
+  box-shadow:
+    0 10px 22px rgba(0, 0, 0, 0.65),
     0 0 18px rgba(212, 184, 140, 0.35),
     inset 0 1px 0 rgba(255, 255, 255, 0.6);
 }
-
 .nav-btn:active {
   transform: translateY(1px);
-  box-shadow: 
+  box-shadow:
     0 3px 8px rgba(0, 0, 0, 0.55),
     inset 0 2px 4px rgba(120, 90, 50, 0.3);
 }
-
 .nav-btn:disabled {
   opacity: 0.35;
   cursor: not-allowed;
   transform: none;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
 }
-
 .nav-btn .arrow {
   font-size: 1.4em;
   line-height: 1;
   color: #8b5a2b;
 }
 
-/* ===================== RESPONSIVE ===================== */
-@media (max-width: 500px) {
-  body {
-    padding: 20px 10px 100px;
-  }
-  .page-content {
-    padding: 30px 26px 48px;
-  }
-  .chapter-title { font-size: 1.25em; letter-spacing: 3px; }
-  .chapter-sub { font-size: 1.15em; margin-bottom: 20px; }
-  .page-content.chapter p { font-size: 0.95em; line-height: 1.72; }
-  .title-page h1 { font-size: 2em; }
-  .book-nav { gap: 14px; bottom: 18px; }
+/* ============ RESPONSIVE ============ */
+@media (max-width: 900px) {
+  body { padding: 20px 10px 100px; }
+  .page-content { padding: 30px 26px 50px; }
+  .chapter-title { font-size: 1.2em; letter-spacing: 3px; }
+  .chapter-sub { font-size: 1.12em; margin-bottom: 20px; }
+  .page-content.chapter p { font-size: 0.94em; line-height: 1.72; }
+  .title-page h1 { font-size: 1.9em; }
+}
+
+@media (max-width: 560px) {
+  .book-nav { gap: 12px; bottom: 16px; }
   .nav-btn { padding: 10px 18px; font-size: 0.8em; }
   .nav-btn .label { display: none; }
   .nav-btn .arrow { font-size: 1.6em; }
-}
-
-/* Deepen the spine shadow in two-page mode */
-.book .page:nth-child(odd) .page-content::after {
-  background: linear-gradient(
-    to left,
-    rgba(40, 25, 10, 0.55) 0%,
-    rgba(70, 45, 20, 0.28) 30%,
-    rgba(70, 45, 20, 0.08) 65%,
-    transparent 100%
-  );
-  width: 80px;
-}
-
-.book .page:nth-child(even) .page-content::after {
-  background: linear-gradient(
-    to right,
-    rgba(40, 25, 10, 0.55) 0%,
-    rgba(70, 45, 20, 0.28) 30%,
-    rgba(70, 45, 20, 0.08) 65%,
-    transparent 100%
-  );
-  width: 80px;
-}
-
-/* Add a subtle center crease shadow on the .book itself */
-.book::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  width: 40px;
-  transform: translateX(-50%);
-  background: linear-gradient(
-    to right,
-    transparent 0%,
-    rgba(30, 18, 5, 0.28) 45%,
-    rgba(30, 18, 5, 0.4) 50%,
-    rgba(30, 18, 5, 0.28) 55%,
-    transparent 100%
-  );
-  z-index: 10;
-  pointer-events: none;
 }
